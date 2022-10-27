@@ -5,7 +5,7 @@ const pool = mysql.createPool({
     host: '127.0.0.1',
     database: 'udit_gym',
     user: 'root',
-    password: 'Foodpanda@123*'   // password here for the workbenhc
+    password: ''   // password here for the workbenhc
 }).promise();
 
 export async function getAllUsers(){
