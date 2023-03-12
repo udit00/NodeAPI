@@ -2,7 +2,7 @@ import express from "express";
 import { getAllUsers, getUser, addUser, deleteUser } from '../database_connection.js';
 
 const router = express.Router();
-
+ 
 
 // all routers in here are handling the req's that starts with 
 // /userController
