@@ -1,12 +1,20 @@
 import mysql from 'mysql2';
 
-
 export const pool = mysql.createPool({
     host: '127.0.0.1',
-    database: 'tasks',
-    user: 'root',
-    password: '9845'   // password here for the workbench
-}).promise();
+    port:"3306",
+    user:"root",
+    password: '9845',
+    database:"twitter_clone",
+    connectionLimit: 10
+  }).promise();
+
+// export const pool = mysql.createPool({
+//     host: '127.0.0.1',
+//     database: 'twitter_clone',
+//     user: 'root',
+//     password: 'Foodpanda@123*'   // password here for the workbench
+// }).promise();
 
 
 // export async function getAllUsers(){

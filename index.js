@@ -1,19 +1,25 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import userController from './Routes/userController.js'
-import loginController from './Routes/loginController.js'
+import twitter from './Routes/Twitter/twitter.js';
 import cors from 'cors';
 
 const app=express();
 const PORT=5000;
 
+app.use(bodyParser.json({ type: 'application/json' }));
+
+
 app.use(bodyParser.json());
 app.use(cors({
     origin: "*"
 }))
-app.use('/userController', userController);
 
-app.use('/loginController', loginController);
+var urlencodedParser = bodyParser.urlencoded({ extended: true })
+// app.use('/userController', userController);
+
+// app.use('/loginController', loginController);
+
+app.use('/twitter', urlencodedParser, twitter);
 
 app.get('/', (req, res) => res.send('Hello from HomePage.'));
 
