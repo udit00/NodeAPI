@@ -17,17 +17,13 @@ router.post('/userlogin',async (req, res) => {
     })
 });
 
-router.get('/check',async (req, res) => {
-    // console.log(users);
-    const username = req.query.prmusername;
-    const password = req.query.prmpassword;
-    console.log(username);
-    console.log(password);
-    let user = {
-        'username': username,
-        'password': password
-    }
-    res.send(use);
+router.get('/getPostsForUser',async (req, res) => {
+    console.log(req.body)
+    CallSP(SP.GetPosts, req).then(data=>{
+        res.json(data);
+    }).catch((err)=>{
+        res.json(err);
+    })
 });
 
 
