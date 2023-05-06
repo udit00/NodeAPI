@@ -14,12 +14,13 @@ router.post('/userlogin',async (req, res) => {
 });
 
 router.get('/getTodo',async (req, res) => {
-    console.log(req.body)
-    CallSP(SP.LoginSP,req).then(data=>{
-        res.json(data);        
-    }).catch((err)=>{
-        res.json(err);
-    })
+    // console.log(req.body)
+    // CallSP(SP.LoginSP,req).then(data=>{
+    //     res.json(data);        
+    // }).catch((err)=>{
+    //     res.json(err);
+    // })
+    res.json('test');
 });
 
 
@@ -39,3 +40,6 @@ router.get('/check',async (req, res) => {
     }
     res.send(use);
 });
+
+
+export default router;

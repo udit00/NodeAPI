@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import twitter from './Routes/Twitter/twitter.js';
+import todo from './Routes/Todo/todoRouter.js';
 import cors from 'cors';
 
 const app=express();
@@ -20,6 +21,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: true })
 // app.use('/loginController', loginController);
 
 app.use('/twitter', urlencodedParser, twitter);
+
+app.use('/todo', urlencodedParser, todo);
 
 app.get('/', (req, res) => res.send('Hello from HomePage.'));
 
