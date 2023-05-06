@@ -6,12 +6,26 @@ const router = express.Router()
 
 router.post('/userlogin',async (req, res) => {
     console.log(req.body)
-    (SP.LoginSP,req).then(data=>{
+    CallSP(SP.LoginSP,req).then(data=>{
         res.json(data);        
     }).catch((err)=>{
         res.json(err);
     })
 });
+
+router.get('/getTodo',async (req, res) => {
+    console.log(req.body)
+    CallSP(SP.LoginSP,req).then(data=>{
+        res.json(data);        
+    }).catch((err)=>{
+        res.json(err);
+    })
+});
+
+
+
+
+
 
 router.get('/check',async (req, res) => {
     // console.log(users);
