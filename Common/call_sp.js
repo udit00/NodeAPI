@@ -1,11 +1,16 @@
 import express from "express";
 import { getResponse, log } from "./common_response.js";
-import { establishConnection, pool } from "../DB/db_connection.js";
-import { errorHandling } from "./error_handling.js";
+import { establishConnection } from "../DB/db_connection.js";
+import { customError, errorHandling } from "./error_handling.js";
 // import { pool } from './database_connection_MSSQL.js';
 
-export function CallSP(sp, req) {
+export function CallSP(sp, req, appid) {
+  
   return new Promise(async (res, rej) => {
+    let pool = establishConnection(appid)    
+    if(pool == null) {
+      rej(customError("Error Establishing Connection."));
+    }
     // log(req.query);
     // log(req.body);
 
@@ -27,8 +32,7 @@ export function CallSP(sp, req) {
     }
     query += ")"; 
 
-    try {
-      establishConnection('twitter');
+    try {      
       const result = await pool.query(query, params);
       res(getResponse(result));
     } catch (error) {

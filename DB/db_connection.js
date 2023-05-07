@@ -13,18 +13,20 @@ import { getAppDBName } from '../Common/app.js';
 //   }).promise();
 
 export function establishConnection(appid) {
-  log(getAppDBName(appid))
-}
-
-export const pool = mysql.createPool({
+  let dbName = getAppDBName(appid)
+  if(dbName == '404') return null
+  return mysql.createPool({
     host: '127.0.0.1',
     port:"3306",
     user:"root",
     password: '9845',
-    database:"twitter_clone",
+    database: dbName,
     connectionLimit: 10
   }).promise();
 
+}
+
+// export const pool = establishConnection()
 // export const pool = mysql.createPool({
 //     host: '127.0.0.1',
 //     database: 'twitter_clone',

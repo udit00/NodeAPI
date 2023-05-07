@@ -4,5 +4,5 @@ const APPNAME = {
 }
 
 export function getAppDBName(app){
-    return APPNAME[`${app}`]
+    return (APPNAME[`${app}`] == undefined) ? '404' : APPNAME[`${app}`];
 }
