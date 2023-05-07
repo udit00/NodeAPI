@@ -1,6 +1,6 @@
 import express from "express";
 import { getResponse, log } from "./common_response.js";
-import { pool } from "../DB/db_connection.js";
+import { establishConnection, pool } from "../DB/db_connection.js";
 import { errorHandling } from "./error_handling.js";
 // import { pool } from './database_connection_MSSQL.js';
 
@@ -10,8 +10,8 @@ export function CallSP(sp, req) {
     // log(req.body);
 
     var body = req.body;
-    if(Object.keys(body).length==0){
-      body=req.query
+    if(Object.keys(body).length == 0) {
+      body=req.query;      
     }
     console.log(body)
     let params = [];
@@ -22,9 +22,13 @@ export function CallSP(sp, req) {
       query += `?,`;
       params.push(body[`${key}`]);
     }
-    query = query.substring(0, query.length - 1) + ")";
+    if(Object.keys(body).length != 0) {
+      query = query.substring(0, query.length - 1);
+    }
+    query += ")"; 
 
     try {
+      establishConnection('twitter');
       const result = await pool.query(query, params);
       res(getResponse(result));
     } catch (error) {

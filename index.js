@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import twitter from './Routes/Twitter/twitter.js';
-import todo from './Routes/Todo/todoRouter.js';
+import todo from './Routes/Todo/todo.js';
 import cors from 'cors';
 
 const app=express();
