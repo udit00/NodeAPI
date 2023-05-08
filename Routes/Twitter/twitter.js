@@ -4,7 +4,7 @@ import { TwitterSP } from "../../Common/SP.js";
 
 const router = express.Router();
 
-const APP_ID = "twittera";
+const APP_ID = "twitter";
 
 // all routers in here are handling the req's that starts with 
 // /loginController
