@@ -18,7 +18,7 @@ router.post('/userlogin',async (req, res) => {
     })
 });
 
-router.get('/getPostsForUser',async (req, res) => {
+router.get('/getpostsforuser',async (req, res) => {
     console.log(req.body)
     CallSP(SP.GetPosts, req, APP_ID).then(data=>{
         res.json(data);

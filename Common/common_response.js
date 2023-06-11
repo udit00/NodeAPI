@@ -16,6 +16,14 @@ export function getResponse(response){
 
     commonResponse.data= JSON.stringify(commonResponse.data)
     return commonResponse;
+
+    // commonResponse.data= JSON.stringify(commonResponse.data)
+    // for(let i=0; i<response[0].length; i++){
+    //     if(i!=(response[0].length-1)){
+    //         commonResponse.data.push({[`Table_${i}`]: response[0][i]});
+    //     }     
+    // }
+    // return commonResponse;
 }
 
 export function log(printable){
