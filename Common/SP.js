@@ -4,9 +4,10 @@ export const TwitterSP = {
 }
 
 export const TodoSP = {
-    LoginSP: 'Login',
-    GetTodos: 'gettodos',
-    AddTodo: 'addtodo',
+    LoginSP: 'user_login',
+    UserRegistrationSP: 'user_registration',
+    GetTodos: 'get_todos',
+    AddTodo: 'add_todo',
     GetTodoTypes: 'getTodoTypes',
     AddTodoType: 'addTodoType'
 }

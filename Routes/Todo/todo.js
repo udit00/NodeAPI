@@ -6,9 +6,18 @@ const router = express.Router()
 
 const APP_ID = "todo";
 
-router.post('/userlogin',async (req, res) => {
+router.post('/userLogin',async (req, res) => {
     // console.log(req.body)
     CallSP(TodoSP.LoginSP,req,APP_ID).then(data=>{
+        res.json(data);        
+    }).catch((err)=>{
+        res.json(err);
+    })
+});
+
+router.post(`/userRegistration`,async (req, res) => {
+    // console.log(req.body)
+    CallSP(TodoSP.UserRegistrationSP,req,APP_ID).then(data=>{
         res.json(data);        
     }).catch((err)=>{
         res.json(err);

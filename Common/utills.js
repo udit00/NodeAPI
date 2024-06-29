@@ -1,10 +1,6 @@
 import fs from 'fs';
 import mime from 'mime';
 
-
-
-
-
 export function encodeBase64(base64Str,imagePath) {
   var base64Image="data:image/png;base64,"+base64Str;
 

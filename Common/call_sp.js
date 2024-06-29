@@ -2,10 +2,12 @@ import express from "express";
 import { getResponse, log } from "./common_response.js";
 import { establishConnection } from "../DB/db_connection.js";
 import { customError, errorHandling } from "./error_handling.js";
+import * as fs from 'fs';
+import { getAppDBName } from "./app.js";
 // import { pool } from './database_connection_MSSQL.js';
 
-export function CallSP(sp, req, appid) {
-  
+
+export function CallSP(sp, req, appid) {    
   return new Promise(async (res, rej) => {
     let pool = establishConnection(appid)    
     if(pool == null) {
@@ -18,7 +20,18 @@ export function CallSP(sp, req, appid) {
     if(Object.keys(body).length == 0) {
       body=req.query;      
     }
-    console.log(body)
+    const dbName = getAppDBName(appid)
+    const apiLogs = { 
+      API: req.url,
+      BODY: body,
+      DB: {
+        APP_ID: appid,
+        SP: sp, 
+        DB_NAME: (dbName == '404') ? "DB NOT FOUND" : dbName       
+      }
+    }    
+    // logApiCall(apiLogs)
+    // console.log(body)
     let params = [];
     let query = `CALL ${sp}(`;
 
@@ -36,7 +49,8 @@ export function CallSP(sp, req, appid) {
       const result = await pool.query(query, params);
       res(getResponse(result));
     } catch (error) {
-      log(error);
+      // log(error);
+      
       rej(errorHandling(error));
     }
   });
