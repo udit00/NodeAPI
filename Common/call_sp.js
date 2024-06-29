@@ -1,11 +1,25 @@
-import express from "express";
+import express, { raw } from "express";
 import { getResponse, log } from "./common_response.js";
 import { establishConnection } from "../DB/db_connection.js";
 import { customError, errorHandling } from "./error_handling.js";
 import * as fs from 'fs';
 import { getAppDBName } from "./app.js";
+import * as LogService from "./logs.js";
 // import { pool } from './database_connection_MSSQL.js';
 
+function createQuery(sp, rawBody) {
+  let params = [];
+  let query = `CALL ${sp}(`;
+  for (var key in rawBody) {
+    query += `?,`;
+    params.push(rawBody[`${key}`]);
+  }
+  if(Object.keys(rawBody).length != 0) {
+    query = query.substring(0, query.length - 1);
+  }
+  query += ")"; 
+  return { query : query, param: params }
+}
 
 export function CallSP(sp, req, appid) {    
   return new Promise(async (res, rej) => {
@@ -13,47 +27,56 @@ export function CallSP(sp, req, appid) {
     if(pool == null) {
       rej(customError("Error Establishing Connection."));
     }
-    // log(req.query);
-    // log(req.body);
-
-    var body = req.body;
-    if(Object.keys(body).length == 0) {
-      body=req.query;      
+    var rawBody = req.body;
+    if(Object.keys(rawBody).length == 0) {
+      rawBody=req.query;      
     }
-    const dbName = getAppDBName(appid)
-    const apiLogs = { 
+    // logApiCall(req, rawBody, appid, sp);     
+    const queryObj = createQuery(sp, rawBody);  
+    let rawResult = {}
+    let rawErr = {}
+    try {      
+      rawResult = await pool.query(queryObj.query, queryObj.param);
+      res(getResponse(rawResult));
+    } catch (error) {
+      rawErr = error
+      logApiError(req, rawBody, appid, sp, error); 
+      rej(errorHandling(error));
+    }
+    logApiCall(req, rawBody, appid, sp, rawResult, rawErr);     
+  });
+}
+
+async function logApiCall(req, body, appid, sp, result, err) {
+  const dbName = getAppDBName(appid);
+  let finalResult = (Array.isArray(result)) ? result[0] : result;
+  const apiLogs = { 
       API: req.url,
       BODY: body,
       DB: {
         APP_ID: appid,
         SP: sp, 
         DB_NAME: (dbName == '404') ? "DB NOT FOUND" : dbName       
-      }
+      },
+      RESULT: finalResult,
+      ERROR: err
     }    
-    // logApiCall(apiLogs)
-    // console.log(body)
-    let params = [];
-    let query = `CALL ${sp}(`;
+  LogService.logApiCall(apiLogs);
+}
 
-
-    for (var key in body) {
-      query += `?,`;
-      params.push(body[`${key}`]);
-    }
-    if(Object.keys(body).length != 0) {
-      query = query.substring(0, query.length - 1);
-    }
-    query += ")"; 
-
-    try {      
-      const result = await pool.query(query, params);
-      res(getResponse(result));
-    } catch (error) {
-      // log(error);
-      
-      rej(errorHandling(error));
-    }
-  });
+async function logApiError(req, body, appid, sp, error) {
+  const dbName = getAppDBName(appid)
+  const apiErrorLogs = { 
+      API: req.url,
+      BODY: body,
+      DB: {
+        APP_ID: appid,
+        SP: sp, 
+        DB_NAME: (dbName == '404') ? "DB NOT FOUND" : dbName       
+      },
+      ERROR: error
+    }    
+  LogService.logApiErr(apiErrorLogs);
 }
 
 
