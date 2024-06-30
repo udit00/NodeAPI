@@ -47,17 +47,31 @@ export function CallSP(sp, req, appid) {
   });
 }
 
+function logToTestFile(obj) {
+  // const objToPrint = {
+  //   body: obj
+  // };
+  const objToPrint = obj;
+  // console.log(objToPrint)
+  // console.log(JSON.stringify(obj, ))
+  LogService.logReq(objToPrint)
+}
+
 async function logApiCall(req, body, appid, sp, result, err) {
+  logToTestFile(req)
   const dbName = getAppDBName(appid);
   let finalResult = (Array.isArray(result)) ? result[0] : result;
   const apiLogs = { 
-      API: req.url,
+      API: {        
+        url: req.originalUrl,
+        rawHeaders: req.rawHeaders
+      },
       BODY: body,
       DB: {
         APP_ID: appid,
         SP: sp, 
         DB_NAME: (dbName == '404') ? "DB NOT FOUND" : dbName       
-      },
+      },      
       RESULT: finalResult,
       ERROR: err
     }    
@@ -67,7 +81,10 @@ async function logApiCall(req, body, appid, sp, result, err) {
 async function logApiError(req, body, appid, sp, error) {
   const dbName = getAppDBName(appid)
   const apiErrorLogs = { 
-      API: req.url,
+      API: {        
+        url: req.originalUrl,
+        rawHeaders: req.rawHeaders
+      },
       BODY: body,
       DB: {
         APP_ID: appid,
