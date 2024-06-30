@@ -8,13 +8,16 @@ export function getResponse(response){
         data: {},
       }
       
+    let jsonResp = [];  
     for(let i=0; i<response[0].length; i++){
         if(i!=(response[0].length-1)){
-       commonResponse.data[`result_${i}`]= response[0][i];
+            // commonResponse.data[`result_${i}`]= response[0][i];
+            // commonResponse.data[`result_${i}`]= 
+            jsonResp.push(response[0][i]);
         }            
-    }
-
-    commonResponse.data= JSON.stringify(commonResponse.data)
+    }    
+    // commonResponse.data= JSON.stringify(commonResponse.data)
+    commonResponse.data = jsonResp;
     return commonResponse;
 
     // commonResponse.data= JSON.stringify(commonResponse.data)
