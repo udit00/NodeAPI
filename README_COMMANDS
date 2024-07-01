@@ -4,3 +4,8 @@
 // http://localhost:5000/userController/getAllUsers
 
 // 127.0.0.1:5000/userController/getAllUsers
+
+
+// sudo lsof -i:22
+
+// 
