@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import twitter from './Routes/Twitter/twitter.js';
 import todo from './Routes/Todo/todo.js';
+import ezone from './Routes/EZone/eZone.js'
 import cors from 'cors';
 
 const app=express();
@@ -23,6 +24,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: true })
 app.use('/twitter', urlencodedParser, twitter);
 
 app.use('/todo', urlencodedParser, todo);
+
+app.use('/eZone', urlencodedParser, ezone);
 
 app.get('/testing', (req, res) => res.send('working testing api'));
 

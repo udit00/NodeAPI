@@ -27,3 +27,5 @@ router.post(`/userRegistration`,async (req, res) => {
         res.json(err);
     })
 });
+
+export default router;
