@@ -3,7 +3,7 @@ import { getResponse, log } from "./common_response.js";
 import { establishConnection } from "../DB/db_connection.js";
 import { customError, errorHandling } from "./error_handling.js";
 import * as fs from 'fs';
-import { getAppDBName } from "./app.js";
+import { getAppDBName, getUserIP } from "./app.js";
 import * as LogService from "./logs.js";
 // import { pool } from './database_connection_MSSQL.js';
 
@@ -64,6 +64,7 @@ async function logApiCall(req, body, appid, sp, result, err) {
   const apiLogs = { 
       API: {        
         url: req.originalUrl,
+        headers: getUserIP(req),
         rawHeaders: req.rawHeaders
       },
       BODY: body,

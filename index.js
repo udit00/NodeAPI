@@ -24,6 +24,8 @@ app.use('/twitter', urlencodedParser, twitter);
 
 app.use('/todo', urlencodedParser, todo);
 
+app.get('/testing', (req, res) => res.send('working testing api'));
+
 app.get('/', (req, res) => res.send('Hello from HomePage.'));
 
 app.listen(PORT, ()=> console.log(`Server is running on =>
