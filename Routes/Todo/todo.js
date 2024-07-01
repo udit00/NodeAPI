@@ -1,11 +1,11 @@
 import express from "express";
 import { CallSP } from "../../Common/call_sp.js";
 import { TodoSP } from "../../Common/SP.js";
-import { isBlank, getUserIP } from "../../Common/app.js";
+import { isBlank, getUserIP, APPNAME } from "../../Common/app.js";
 
 const router = express.Router()
 
-const APP_ID = "todo";
+const APP_ID = APPNAME.todo;
 
 router.post('/userLogin',async (req, res) => {
     if(isBlank(req.body['prm_useripaddress'])) {

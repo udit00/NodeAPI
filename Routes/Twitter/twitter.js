@@ -1,10 +1,11 @@
 import express from "express";
 import { CallSP } from "../../Common/call_sp.js";
 import { TwitterSP } from "../../Common/SP.js";
+import { APPNAME } from "../../Common/app.js";
 
 const router = express.Router();
 
-const APP_ID = "twitter";
+const APP_ID = APPNAME.twitter;
 
 // all routers in here are handling the req's that starts with 
 // /loginController

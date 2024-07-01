@@ -11,3 +11,8 @@ export const TodoSP = {
     GetTodoTypes: 'getTodoTypes',
     AddTodoType: 'addTodoType'
 }
+
+export const eZoneSP = {
+    LoginSP: 'user_login',
+    UserRegistrationSP: 'user_registration'
+}
