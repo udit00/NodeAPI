@@ -1,7 +1,7 @@
 export const APPNAME = {
     twitter: "twitter_clone",
     todo: "todo",
-    eZone: "ezone"    
+    ezone: "ezone"    
 }
 
 export function isBlank(check) {

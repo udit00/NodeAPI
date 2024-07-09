@@ -5,6 +5,7 @@
 
 // 127.0.0.1:5000/userController/getAllUsers
 
+// sudo kill -9 `sudo lsof -t -i:5000`
 
 // sudo lsof -i:22
 
