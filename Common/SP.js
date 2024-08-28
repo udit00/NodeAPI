@@ -6,10 +6,10 @@ export const TwitterSP = {
 export const TodoSP = {
     LoginSP: 'user_login',
     UserRegistrationSP: 'user_registration',
-    GetTodos: 'get_todos',
-    AddTodo: 'add_todo',
-    GetTodoTypes: 'getTodoTypes',
-    AddTodoType: 'addTodoType'
+    GetTodos: 'app_todo_get',
+    AddTodo: 'app_todo_update',
+    GetTodoTypes: 'app_todotype_get',
+    AddTodoType: 'app_todotype_update'
 }
 
 export const eZoneSP = {
